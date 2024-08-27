@@ -1,0 +1,105 @@
+{
+  "slot1": [
+    {
+      "id": "b26a",
+      "medical": "sdf",
+      "passport": "sdfsd",
+      "names": "",
+      "link": "fsd",
+      "reference": "",
+      "isPaid": true
+    },
+    {
+      "id": "ab4a",
+      "medical": "sdf",
+      "passport": "sdfs",
+      "names": "",
+      "link": "dfs",
+      "reference": "",
+      "isPaid": true
+    },
+    {
+      "id": "9cf6",
+      "medical": "sdf",
+      "passport": "sdfs",
+      "names": "",
+      "link": "dfsdf",
+      "reference": "",
+      "isPaid": true
+    },
+    {
+      "id": "f30e",
+      "medical": "sdf",
+      "passport": "sdfs",
+      "names": "",
+      "link": "dfsdfsdf",
+      "reference": "",
+      "isPaid": false
+    },
+    {
+      "id": "b97b",
+      "medical": "sdf",
+      "passport": "sdfs",
+      "names": "",
+      "link": "dfsdfsdfsdf",
+      "reference": "",
+      "isPaid": false
+    },
+    {
+      "id": "bb18",
+      "medical": "sdf",
+      "passport": "sdfs",
+      "names": "",
+      "link": "dfsdfsdfsdfsdf",
+      "reference": "",
+      "isPaid": false
+    },
+    {
+      "id": "d764",
+      "medical": "dfsd",
+      "passport": "fsd",
+      "names": "",
+      "link": "fsd",
+      "reference": "",
+      "isPaid": false
+    },
+    {
+      "id": "b400",
+      "medical": "dfsd",
+      "passport": "fsd",
+      "names": "",
+      "link": "fsdfsd",
+      "reference": "",
+      "isPaid": false
+    }
+  ],
+  "slot2": [
+    {
+      "id": "d2a7",
+      "medical": "sfsdfsdf",
+      "passport": "sdfsdfsd",
+      "names": "",
+      "link": "sdfsf",
+      "reference": "",
+      "isPaid": false
+    },
+    {
+      "id": "f3fa",
+      "medical": "fsdfs",
+      "passport": "fsfsf",
+      "names": "sfsdfsdfs",
+      "link": "sdffs",
+      "reference": "sdfsd",
+      "isPaid": false
+    }
+  ],
+  "slot3": [],
+  "slot4": [],
+  "slots-routes": [
+    {
+      "id": "d632",
+      "label": "Slot",
+      "href": "slot"
+    }
+  ]
+}
