@@ -1,22 +1,23 @@
-import { FC } from "react";
-import { useLocation } from "react-router-dom";
+import { FC, useEffect } from "react";
+// import { useLocation } from "react-router-dom";
 import truncateLink from "@/lib/truncateLink";
 import { Slot } from "@/types/types";
 
 import ActionsDropDown from "../actions/ActionsDropDown";
 import TableHeadContainer from "./TableHeadContainer";
 import {
-  useAddHistoryMutation,
+  // useAddHistoryMutation,
   useGetSlotQuery,
-  useUpdateSlotRowMutation,
+  // useUpdateSlotRowMutation,
 } from "@/redux/api/baseApi";
-import toast from "react-hot-toast";
+// import toast from "react-hot-toast";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import Loader from "@/components/Loader";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useAppSelector } from "@/redux/hooks";
 
 interface SlotTableContainerProps {
   path: string;
@@ -34,9 +35,15 @@ const SlotTableContainer: FC<SlotTableContainerProps> = ({
   setSelectedRows,
 }) => {
   const { data, isLoading, isError } = useGetSlotQuery(path);
-  const [updateSlot] = useUpdateSlotRowMutation();
-  const [addHistory] = useAddHistoryMutation();
-  const { pathname } = useLocation();
+  // const [updateSlot] = useUpdateSlotRowMutation();
+  // const [addHistory] = useAddHistoryMutation();
+  // const { pathname } = useLocation();
+
+  const activeCard = useAppSelector((state) => state.activeCard.activeCard);
+
+  useEffect(() => {
+    console.log("Active Card:", activeCard);
+  }, [activeCard]);
 
   // Handler selecting rows
   const handleRowSelection = (id: string) => {
@@ -66,31 +73,61 @@ const SlotTableContainer: FC<SlotTableContainerProps> = ({
   }
 
   // Handler payment complete
-  const handlePayClick = async (id: string) => {
-    try {
-      const slotToUpdate = data?.find((slot: Slot) => slot._id === id);
-      if (!slotToUpdate) {
-        toast.error("Slot not found");
-        return;
-      }
+  // const handlePayClick = async (id: string) => {
+  //   try {
+  //     const slotToUpdate = data?.find((slot: Slot) => slot._id === id);
+  //     if (!slotToUpdate) {
+  //       toast.error("Slot not found");
+  //       return;
+  //     }
 
-      const result1 = await updateSlot({
-        id,
-        path: pathname,
-        data: { ...slotToUpdate, isPaid: true },
-      }).unwrap();
-      const updatedData = { ...slotToUpdate, isPaid: true };
-      const result2 = await addHistory(updatedData);
+  //     const result1 = await updateSlot({
+  //       id,
+  //       path: pathname,
+  //       data: { ...slotToUpdate, isPaid: true },
+  //     }).unwrap();
+  //     const updatedData = { ...slotToUpdate, isPaid: true };
+  //     const result2 = await addHistory(updatedData);
 
-      if (result1 && result2) {
-        toast.success("Payment successful");
-      }
-    } catch (error) {
-      console.error("Failed to record payment", error);
-      toast.error("Payment failed");
+  //     if (result1 && result2) {
+  //       toast.success("Payment successful");
+  //     }
+  //   } catch (error) {
+  //     console.error("Failed to record payment", error);
+  //     toast.error("Payment failed");
+  //   }
+  // };
+
+  const handlePayClick = (id: string) => {
+    console.log(id);
+    // console.log("Current activeCard:", activeCard);
+
+    if (!activeCard) {
+      console.error("No active card available.");
+      return;
     }
-  };
 
+    const cardDetails = {
+      name_on_card: activeCard.name,
+      card_number: activeCard.number,
+      card_month: `${activeCard.expiry.substring(0, 2)}/`,
+      card_year: activeCard.expiry.substring(2),
+      cvv_cvc: activeCard.cvc,
+    };
+
+    console.log("Prepared cardDetails:", cardDetails);
+
+    window.postMessage(
+      {
+        type: "PAY_SINGLE_SLIP",
+        payload: {
+          link: "https://wafid.com/appointment/2lj3ekLOaymnQxv/pay/",
+          cardDetails,
+        },
+      },
+      "*"
+    );
+  };
   return (
     <div className="w-full bg-white p-5 rounded-md">
       {data && data.length > 0 ? (
